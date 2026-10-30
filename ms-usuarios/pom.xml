@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.los-maestros</groupId>
-	<artifactId>ms-usuarios</artifactId>
+	<artifactId>ferreteria</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ms-usuarios</name>
-	<description>Microservicio de usuarios de Ferretería Los Maestros</description>
+	<name/>
+	<description/>
 	<url/>
 	<licenses>
 		<license/>
