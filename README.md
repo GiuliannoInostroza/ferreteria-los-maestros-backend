@@ -10,7 +10,7 @@ Backend de la tienda Ferretería Los Maestros (DSY1104 Desarrollo Fullstack II, 
 | Cuentas corrientes | `ms-cuentas` | 8084 | `db_cuentas` | Pendiente |
 | Contenido | `ms-contenido` | 8085 | `db_contenido` | Pendiente |
 
-El frontend está en https://github.com/GiuliannoInostroza/ferreteria-los-maestros
+El frontend está en https://github.com/GiuliannoInostroza/front-ferreteria-los-maestros
 
 ## Cómo levantar ms-usuarios
 
