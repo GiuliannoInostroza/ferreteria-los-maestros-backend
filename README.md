@@ -4,11 +4,11 @@ Backend de la tienda Ferretería Los Maestros (DSY1104 Desarrollo Fullstack II, 
 
 | Microservicio | Carpeta | Puerto | Base de datos | Estado |
 |---|---|---|---|---|
-| Usuarios | `ms-usuarios` | 8081 | `db_usuarios` | En desarrollo |
-| Catálogo | `ms-catalogo` | 8082 | `db_catalogo` | Pendiente |
-| Pedidos | `ms-pedidos` | 8083 | `db_pedidos` | Pendiente |
-| Cuentas corrientes | `ms-cuentas` | 8084 | `db_cuentas` | Pendiente |
-| Contenido | `ms-contenido` | 8085 | `db_contenido` | Pendiente |
+| Usuarios | `ms-usuarios` | 8090 | `db_usuarios` | En desarrollo |
+| Catálogo | `ms-catalogo` | 8091 | `db_catalogo` | Pendiente |
+| Pedidos | `ms-pedidos` | 8092 | `db_pedidos` | Pendiente |
+| Cuentas corrientes | `ms-cuentas` | 8093 | `db_cuentas` | Pendiente |
+| Contenido | `ms-contenido` | 8094 | `db_contenido` | Pendiente |
 
 El frontend está en https://github.com/GiuliannoInostroza/front-ferreteria-los-maestros
 
@@ -16,7 +16,7 @@ El frontend está en https://github.com/GiuliannoInostroza/front-ferreteria-los-
 
 1. Crear la base `db_usuarios` y la cuenta `usuarios_app` (comandos en `docs/GUIA_MS_USUARIOS.md`, paso 0).
 2. Dentro de `ms-usuarios`, definir `DB_USER` y `DB_PASSWORD` como variables de entorno y ejecutar `./mvnw spring-boot:run` (en Windows `.\mvnw.cmd spring-boot:run`).
-3. Abrir Swagger en http://localhost:8081/swagger-ui/index.html.
+3. Abrir Swagger en http://localhost:8090/swagger-ui/index.html.
 
 | Operación | Método y ruta | Respuesta |
 |---|---|---|

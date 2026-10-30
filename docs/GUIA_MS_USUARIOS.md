@@ -30,7 +30,7 @@ $env:DB_PASSWORD="CAMBIAR_CLAVE"
 .\mvnw.cmd spring-boot:run
 ```
 
-Resultado esperado: en la consola aparece `HikariPool-1 - Start completed` y `Started UsuariosApplication`. Swagger queda en http://localhost:8081/swagger-ui/index.html con los cinco endpoints.
+Resultado esperado: en la consola aparece `HikariPool-1 - Start completed` y `Started UsuariosApplication`. Swagger queda en http://localhost:8090/swagger-ui/index.html con los cinco endpoints.
 
 Si aparece "Unable to find a single main class", hay clases viejas compiladas: ejecutar `./mvnw clean` y volver a levantar.
 
@@ -420,7 +420,7 @@ Crear la colección "ms-usuarios" con: registro, login (guardar el token en una 
 ## 7. Conectar el frontend
 
 En el frontend (repo `ferreteria-los-maestros`):
-- `.env` con `VITE_API_USUARIOS=http://localhost:8081`.
+- `.env` con `VITE_API_USUARIOS=http://localhost:8090`.
 - Crear `src/services/usuarios.js` con funciones `login(datos)` y `registrar(datos)` que hagan `fetch` al backend.
 - `Login.jsx` llama a `login`, guarda el `token` y el usuario. `utils/persistencia.js` deja de leer `usuariosAdmin`.
 - `AdminUsuarios.jsx` usa `GET/POST/PUT/PATCH` del backend enviando `Authorization: Bearer <token>`.
@@ -432,10 +432,10 @@ Cada microservicio es una carpeta nueva al lado de `ms-usuarios`, creada con Spr
 
 | Orden | Carpeta | Puerto | Base | Primera entidad |
 |---|---|---|---|---|
-| 2 | `ms-catalogo` | 8082 | `db_catalogo` | Producto |
-| 3 | `ms-pedidos` | 8083 | `db_pedidos` | Pedido y DetallePedido |
-| 4 | `ms-cuentas` | 8084 | `db_cuentas` | CuentaCorriente |
-| 5 | `ms-contenido` | 8085 | `db_contenido` | Blog y MensajeContacto |
+| 2 | `ms-catalogo` | 8091 | `db_catalogo` | Producto |
+| 3 | `ms-pedidos` | 8092 | `db_pedidos` | Pedido y DetallePedido |
+| 4 | `ms-cuentas` | 8093 | `db_cuentas` | CuentaCorriente |
+| 5 | `ms-contenido` | 8094 | `db_contenido` | Blog y MensajeContacto |
 
 En cada uno:
 - Copiar `JwtService` (solo `leer`), `JwtFiltro` y `SeguridadConfig` con sus propias reglas por rol, usando la misma `JWT_SECRET`.
