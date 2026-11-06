@@ -76,6 +76,18 @@ Al iniciar por primera vez, `ms-usuarios` crea el administrador definido en `ADM
 
 Para probar una ruta protegida en Swagger: ejecutar `POST /api/auth/login` en ms-usuarios, copiar el `token`, presionar **Authorize** en el otro Swagger y pegarlo.
 
+## Levantar con Docker
+
+`docker-compose.yml` levanta los dos microservicios, cada uno con su propia base MariaDB en un contenedor. Las claves van en `.env.docker` (ignorado por Git; los nombres están en `.env.docker.example`).
+
+```bash
+cd ms-usuarios && ./mvnw clean package -DskipTests && cd ..
+cd ms-pedidos && ./mvnw clean package -DskipTests && cd ..
+docker compose --env-file .env.docker up --build -d
+```
+
+Para detenerlos: `docker compose --env-file .env.docker down`. Los datos quedan en los volúmenes `datos-usuarios` y `datos-pedidos`.
+
 ## Endpoints de ms-usuarios
 
 | Operación | Método y ruta | Acceso | Respuesta |

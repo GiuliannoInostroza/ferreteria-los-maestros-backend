@@ -1,0 +1,60 @@
+services:
+
+  db-usuarios:
+    image: mariadb:11.4
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_DATABASE: db_usuarios
+      MARIADB_USER: usuarios_app
+      MARIADB_PASSWORD: ${USUARIOS_DB_PASSWORD}
+    volumes:
+      - datos-usuarios:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      retries: 20
+
+  db-pedidos:
+    image: mariadb:11.4
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_DATABASE: db_pedidos
+      MARIADB_USER: pedidos_app
+      MARIADB_PASSWORD: ${PEDIDOS_DB_PASSWORD}
+    volumes:
+      - datos-pedidos:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      retries: 20
+
+  ms-usuarios:
+    build: ./ms-usuarios
+    ports:
+      - "8090:8090"
+    environment:
+      DB_URL: jdbc:mariadb://db-usuarios:3306/db_usuarios
+      DB_USER: usuarios_app
+      DB_PASSWORD: ${USUARIOS_DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+    depends_on:
+      db-usuarios:
+        condition: service_healthy
+
+  ms-pedidos:
+    build: ./ms-pedidos
+    ports:
+      - "8092:8092"
+    environment:
+      DB_URL: jdbc:mariadb://db-pedidos:3306/db_pedidos
+      DB_USER: pedidos_app
+      DB_PASSWORD: ${PEDIDOS_DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+    depends_on:
+      db-pedidos:
+        condition: service_healthy
+
+volumes:
+  datos-usuarios:
+  datos-pedidos:
