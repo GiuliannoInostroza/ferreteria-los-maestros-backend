@@ -113,5 +113,3 @@ Estados: Pendiente, Confirmado, En preparación, Listo para retiro, En despacho,
 | GET /api/pedidos con token Cliente | ms-pedidos 8092 | 403 |
 | GET /api/pedidos con token Vendedor | ms-pedidos 8092 | 200 |
 | Token alterado | ms-pedidos 8092 | 401 |
-
-Para agregar la validación del JWT a otro microservicio, seguir `docs/GUIA_JWT_MICROSERVICIOS.md`.
