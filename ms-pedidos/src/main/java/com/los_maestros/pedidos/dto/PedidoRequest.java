@@ -12,5 +12,5 @@ public record PedidoRequest(
     @NotBlank(message = "El tipo de entrega es obligatorio") String tipoEntrega,
     String direccionDespacho,
     @NotBlank(message = "El medio de pago es obligatorio") String medioPago,
-    @NotEmpty(message = "El pedido debe tener al menos un producto") List<@Valid DetallePedido> detalles
+    @Valid @NotEmpty(message = "El pedido debe tener al menos un producto") List<DetallePedido> detalles
 ) {}

@@ -1,6 +1,6 @@
 package com.los_maestros.pedidos.service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -45,7 +45,7 @@ public class PedidoService {
         pedido.setMedioPago(datos.medioPago());
         pedido.setEstado("Pendiente");
         pedido.setTotal(total);
-        pedido.setFecha(LocalDateTime.now());
+        pedido.setFecha(LocalDate.now());
         Pedido guardado = repository.save(pedido);
         for (DetallePedido detalle : datos.detalles()) {
             detalle.setPedidoId(guardado.getId());

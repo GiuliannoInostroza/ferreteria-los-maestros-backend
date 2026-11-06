@@ -1,6 +1,6 @@
 package com.los_maestros.pedidos.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,5 +37,5 @@ public class Pedido {
 
     private Integer total;
 
-    private LocalDateTime fecha;
+    private LocalDate fecha;
 }
