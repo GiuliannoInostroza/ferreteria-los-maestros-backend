@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.los_maestros.usuarios.dto.UsuarioRequest;
+import com.los_maestros.usuarios.dto.UsuarioResponse;
 import com.los_maestros.usuarios.model.Usuario;
 import com.los_maestros.usuarios.service.UsuarioService;
 
@@ -26,22 +28,31 @@ public class UsuarioController {
 
     public UsuarioController(UsuarioService service) { this.service = service; }
 
-    @GetMapping public List<Usuario> listar() { return service.listar(); }
+    @GetMapping public List<UsuarioResponse> listar() {
+        return service.listar().stream().map(usuario -> respuesta(usuario)).toList();
+    }
 
-    @GetMapping("/{id}") public Usuario buscar(@PathVariable Long id) { return service.buscar(id); }
+    @GetMapping("/{id}") public UsuarioResponse buscar(@PathVariable Long id) {
+        return respuesta(service.buscar(id));
+    }
 
     @PostMapping
-    public ResponseEntity<Usuario> crear(@Valid @RequestBody Usuario usuario) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.guardar(usuario));
+    public ResponseEntity<UsuarioResponse> crear(@Valid @RequestBody UsuarioRequest datos) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(respuesta(service.guardar(datos)));
     }
 
     @PutMapping("/{id}")
-    public Usuario actualizar(@PathVariable Long id,
+    public UsuarioResponse actualizar(@PathVariable Long id,
             @Valid @RequestBody Usuario usuario) {
-        return service.actualizar(id, usuario);
+        return respuesta(service.actualizar(id, usuario));
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void eliminar(@PathVariable Long id) { service.eliminar(id); }
+
+    private UsuarioResponse respuesta(Usuario usuario) {
+        return new UsuarioResponse(usuario.getId(), usuario.getNombre(),
+            usuario.getCorreo(), usuario.getRol(), usuario.getActivo());
+    }
 }
