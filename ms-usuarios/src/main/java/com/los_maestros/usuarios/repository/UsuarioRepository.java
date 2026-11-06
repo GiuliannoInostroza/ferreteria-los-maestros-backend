@@ -11,6 +11,5 @@ import com.los_maestros.usuarios.model.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     List<Usuario> findByRolIgnoreCase(String rol);
-    Optional<Usuario> findByCorreo(String correo);
-    boolean existsByCorreo(String correo);
+    Optional<Usuario> findByCorreoIgnoreCase(String correo);
 }

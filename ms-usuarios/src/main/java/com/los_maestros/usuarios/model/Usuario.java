@@ -1,7 +1,5 @@
 package com.los_maestros.usuarios.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +13,6 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 @Data
 @AllArgsConstructor
@@ -42,7 +39,6 @@ public class Usuario {
     @NotNull(message = "El estado es obligatorio")
     private Boolean activo;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @Column(name = "password_hash")
-    private String passwordHash;
+    @Column(nullable = false)
+    private String password;
 }
