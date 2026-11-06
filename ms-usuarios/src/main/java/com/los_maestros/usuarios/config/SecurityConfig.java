@@ -34,7 +34,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/api/auth/**", "/swagger-ui/**",
-                    "/swagger-ui.html", "/v3/api-docs/**").permitAll()
+                    "/swagger-ui.html", "/v3/api-docs/**", "/error").permitAll()
                 .requestMatchers("/api/usuarios/**").hasRole("Administrador")
                 .anyRequest().denyAll())
             .exceptionHandling(e -> e.authenticationEntryPoint(

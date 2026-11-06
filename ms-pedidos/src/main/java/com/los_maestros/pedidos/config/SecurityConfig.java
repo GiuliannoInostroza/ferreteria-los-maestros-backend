@@ -28,7 +28,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/swagger-ui/**", "/swagger-ui.html",
-                    "/v3/api-docs/**").permitAll()
+                    "/v3/api-docs/**", "/error").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/pedidos").authenticated()
                 .requestMatchers(HttpMethod.GET, "/api/pedidos/mios").authenticated()
                 .requestMatchers("/api/pedidos/**").hasAnyRole("Administrador", "Vendedor")
