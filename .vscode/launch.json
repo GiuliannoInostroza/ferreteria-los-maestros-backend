@@ -1,0 +1,27 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "ms-usuarios",
+            "request": "launch",
+            "mainClass": "com.los_maestros.usuarios.UsuariosApplication",
+            "projectName": "ferreteria",
+            "envFile": "${workspaceFolder}/ms-usuarios/.env"
+        },
+        {
+            "type": "java",
+            "name": "ms-pedidos",
+            "request": "launch",
+            "mainClass": "com.los_maestros.pedidos.PedidosApplication",
+            "projectName": "pedidos",
+            "envFile": "${workspaceFolder}/ms-pedidos/.env"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Todos los microservicios",
+            "configurations": ["ms-usuarios", "ms-pedidos"]
+        }
+    ]
+}
