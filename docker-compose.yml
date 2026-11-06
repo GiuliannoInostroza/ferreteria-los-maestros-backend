@@ -33,7 +33,7 @@ services:
     ports:
       - "8090:8090"
     environment:
-      DB_URL: jdbc:mariadb://db-usuarios:3306/db_usuarios
+      DB_URL: jdbc:mysql://db-usuarios:3306/db_usuarios?useSSL=false&allowPublicKeyRetrieval=true
       DB_USER: usuarios_app
       DB_PASSWORD: ${USUARIOS_DB_PASSWORD}
       JWT_SECRET: ${JWT_SECRET}
@@ -47,7 +47,7 @@ services:
     ports:
       - "8092:8092"
     environment:
-      DB_URL: jdbc:mariadb://db-pedidos:3306/db_pedidos
+      DB_URL: jdbc:mysql://db-pedidos:3306/db_pedidos?useSSL=false&allowPublicKeyRetrieval=true
       DB_USER: pedidos_app
       DB_PASSWORD: ${PEDIDOS_DB_PASSWORD}
       JWT_SECRET: ${JWT_SECRET}
