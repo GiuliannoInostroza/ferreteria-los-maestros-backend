@@ -65,6 +65,8 @@ set -a && . ./.env && set +a
 
 En Windows (PowerShell), definir las variables con `$env:NOMBRE="valor"` y ejecutar `.\mvnw.cmd spring-boot:run`.
 
+Maven y sus dependencias se descargan desde el mirror de Google de Maven Central (`.mvn/settings.xml`, cargado por `.mvn/maven.config`, y la dirección del wrapper en `.mvn/wrapper/maven-wrapper.properties`). Así compila también en redes que bloquean el repositorio oficial, como la de Duoc, sin configurar nada en cada computador.
+
 Al iniciar por primera vez, `ms-usuarios` crea el administrador definido en `ADMIN_CORREO` y `ADMIN_PASSWORD`.
 
 | Swagger | Dirección |
