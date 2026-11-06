@@ -16,6 +16,12 @@ public class GlobalExceptionHandler {
             .body(Map.of("error", e.getMessage()));
     }
 
+    @ExceptionHandler(CorreoDuplicadoException.class)
+    ResponseEntity<Map<String, String>> correoDuplicado(CorreoDuplicadoException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+            .body(Map.of("error", e.getMessage()));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     ResponseEntity<Map<String, String>> datosInvalidos(MethodArgumentNotValidException e) {
         String mensaje = e.getBindingResult().getFieldErrors().stream()
