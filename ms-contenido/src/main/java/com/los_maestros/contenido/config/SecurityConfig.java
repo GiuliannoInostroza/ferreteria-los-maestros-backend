@@ -33,39 +33,43 @@ public class SecurityConfig {
             .cors(Customizer.withDefaults())
             .sessionManagement(s ->
                 s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-                .requestMatchers(
-                    "/swagger-ui/**",
-                    "/swagger-ui.html",
-                    "/v3/api-docs/**",
-                    "/error"
-                ).permitAll()
+.authorizeHttpRequests(auth -> auth
+    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-                .requestMatchers(
-                    HttpMethod.GET,
-                    "/api/blogs",
-                    "/api/blogs/**"
-                ).permitAll()
+    .requestMatchers(
+        "/swagger-ui/**",
+        "/swagger-ui.html",
+        "/v3/api-docs/**",
+        "/error"
+    ).permitAll()
+        // Blogs: lectura pública
+        .requestMatchers(HttpMethod.GET, "/api/blogs", "/api/blogs/**")
+            .permitAll()
 
-                .requestMatchers(
-                    HttpMethod.POST,
-                    "/api/blogs"
-                ).hasRole("Administrador")
+        // Blogs: escritura solo Administrador
+        .requestMatchers(HttpMethod.POST, "/api/blogs")
+            .hasRole("Administrador")
+        .requestMatchers(HttpMethod.PUT, "/api/blogs/**")
+            .hasRole("Administrador")
+        .requestMatchers(HttpMethod.DELETE, "/api/blogs/**")
+            .hasRole("Administrador")
 
-                .requestMatchers(
-                    HttpMethod.PUT,
-                    "/api/blogs/**"
-                ).hasRole("Administrador")
+        // Contacto: cualquier visitante puede enviar
+        .requestMatchers(HttpMethod.POST, "/api/contactos")
+            .permitAll()
 
-                .requestMatchers(
-                    HttpMethod.DELETE,
-                    "/api/blogs/**"
-                ).hasRole("Administrador")
+        // Contacto: solo Administrador puede consultar
+        .requestMatchers(HttpMethod.GET, "/api/contactos", "/api/contactos/**")
+            .hasRole("Administrador")
 
-                .anyRequest().denyAll()
-            )
+        // Contacto: solo Administrador puede eliminar
+        .requestMatchers(HttpMethod.DELETE, "/api/contactos/**")
+            .hasRole("Administrador")
+
+        .anyRequest().denyAll()
+    )
+
             .exceptionHandling(e -> e.authenticationEntryPoint(
                 new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
             .addFilterBefore(
