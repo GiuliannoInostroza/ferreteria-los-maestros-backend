@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.los_maestros.pedidos.dto.PedidoRequest;
 import com.los_maestros.pedidos.model.Pedido;
+import com.los_maestros.pedidos.model.DetallePedido;
+import com.los_maestros.pedidos.repository.DetallePedidoRepository;
 import com.los_maestros.pedidos.service.PedidoService;
 
 import jakarta.validation.Valid;
@@ -22,21 +24,36 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/pedidos")
 public class PedidoController {
+
     private final PedidoService service;
+    private final DetallePedidoRepository detalleRepository;
 
-    public PedidoController(PedidoService service) { this.service = service; }
+    public PedidoController(
+            PedidoService service,
+            DetallePedidoRepository detalleRepository) {
+        this.service = service;
+        this.detalleRepository = detalleRepository;
+    }
 
-    @GetMapping public List<Pedido> listar() { return service.listar(); }
+    @GetMapping
+    public List<Pedido> listar() {
+        return service.listar();
+    }
 
-    @GetMapping("/mios") public List<Pedido> mios() {
+    @GetMapping("/mios")
+    public List<Pedido> mios() {
         return service.listarPorCliente(correoSesion());
     }
 
-    @GetMapping("/{id}") public Pedido buscar(@PathVariable Long id) { return service.buscar(id); }
+    @GetMapping("/{id}")
+    public Pedido buscar(@PathVariable Long id) {
+        return service.buscar(id);
+    }
 
     @PostMapping
     public ResponseEntity<Pedido> crear(@Valid @RequestBody PedidoRequest datos) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.crear(datos, correoSesion()));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(service.crear(datos, correoSesion()));
     }
 
     @PutMapping("/{id}")
@@ -45,7 +62,13 @@ public class PedidoController {
         return service.actualizar(id, pedido);
     }
 
+    @GetMapping("/reportes/detalles")
+    public List<DetallePedido> listarDetallesReporte() {
+        return detalleRepository.findAll();
+    }
+
     private String correoSesion() {
-        return SecurityContextHolder.getContext().getAuthentication().getName();
+        return SecurityContextHolder.getContext()
+                .getAuthentication().getName();
     }
 }
