@@ -31,12 +31,16 @@ public class SecurityConfig {
                 .requestMatchers("/swagger-ui/**", "/swagger-ui.html",
                     "/v3/api-docs/**", "/error").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/v1/productos/alertas")
-                    .hasRole("Administrador")
+                    .hasAnyRole("Administrador", "Vendedor")
                 .requestMatchers(HttpMethod.POST, "/api/v1/productos/descontar-stock")
                     .authenticated()
                 .requestMatchers(HttpMethod.GET, "/api/v1/catalogo/**",
                     "/api/v1/productos/**", "/api/v1/categorias/**",
                     "/api/v1/ofertas/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/v1/productos")
+                    .hasAnyRole("Administrador", "Vendedor")
+                .requestMatchers(HttpMethod.PUT, "/api/v1/productos/**")
+                    .hasAnyRole("Administrador", "Vendedor")
                 .requestMatchers("/api/v1/productos/**", "/api/v1/categorias/**",
                     "/api/v1/ofertas/**").hasRole("Administrador")
                 .anyRequest().denyAll())

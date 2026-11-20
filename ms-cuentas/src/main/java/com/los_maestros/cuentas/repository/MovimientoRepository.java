@@ -10,4 +10,6 @@ import com.los_maestros.cuentas.model.Movimiento;
 @Repository
 public interface MovimientoRepository extends JpaRepository<Movimiento, Long> {
     List<Movimiento> findByCuentaId(Long cuentaId);
+
+    boolean existsByCuentaIdAndTipoAndPedidoId(Long cuentaId, String tipo, Long pedidoId);
 }
