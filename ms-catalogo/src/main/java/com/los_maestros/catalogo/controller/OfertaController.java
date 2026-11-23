@@ -20,7 +20,7 @@ import com.los_maestros.catalogo.service.OfertaService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1/ofertas")
+@RequestMapping("/api/ofertas")
 public class OfertaController {
     private final OfertaService service;
 

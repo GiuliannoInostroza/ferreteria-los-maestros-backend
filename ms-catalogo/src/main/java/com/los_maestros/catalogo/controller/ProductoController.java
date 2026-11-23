@@ -22,7 +22,7 @@ import com.los_maestros.catalogo.service.ProductoService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1/productos")
+@RequestMapping("/api/productos")
 public class ProductoController {
     private final ProductoService service;
 

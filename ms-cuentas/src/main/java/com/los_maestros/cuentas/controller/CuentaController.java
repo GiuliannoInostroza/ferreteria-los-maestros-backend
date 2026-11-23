@@ -23,7 +23,7 @@ import com.los_maestros.cuentas.service.CuentaService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1/cuentas")
+@RequestMapping("/api/cuentas")
 public class CuentaController {
     private final CuentaService service;
 

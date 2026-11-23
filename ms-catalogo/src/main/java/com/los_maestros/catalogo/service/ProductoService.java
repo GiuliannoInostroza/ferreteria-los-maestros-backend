@@ -2,11 +2,8 @@ package com.los_maestros.catalogo.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.los_maestros.catalogo.dto.DescuentoStockRequest;
 import com.los_maestros.catalogo.dto.ItemStock;
@@ -91,26 +88,17 @@ public class ProductoService {
         repository.delete(actual);
     }
 
-    @Transactional
     public List<Producto> descontarStock(DescuentoStockRequest datos) {
-        // Un mismo producto puede aparecer más de una vez en la solicitud.
-        Map<Long, Integer> cantidades = new LinkedHashMap<>();
         for (ItemStock item : datos.items()) {
-            cantidades.merge(item.productoId(), item.cantidad(), Integer::sum);
-        }
-
-        // Primero verificamos todas las cantidades; después las descontamos.
-        for (Map.Entry<Long, Integer> item : cantidades.entrySet()) {
-            Producto producto = buscar(item.getKey());
-            if (producto.getStock() < item.getValue()) {
+            Producto producto = buscar(item.productoId());
+            if (producto.getStock() < item.cantidad()) {
                 throw new ReglaNegocioException("Stock insuficiente de " + producto.getNombre());
             }
         }
-
         List<Producto> actualizados = new ArrayList<>();
-        for (Map.Entry<Long, Integer> item : cantidades.entrySet()) {
-            Producto producto = buscar(item.getKey());
-            producto.setStock(producto.getStock() - item.getValue());
+        for (ItemStock item : datos.items()) {
+            Producto producto = buscar(item.productoId());
+            producto.setStock(producto.getStock() - item.cantidad());
             actualizados.add(repository.save(producto));
         }
         return actualizados;

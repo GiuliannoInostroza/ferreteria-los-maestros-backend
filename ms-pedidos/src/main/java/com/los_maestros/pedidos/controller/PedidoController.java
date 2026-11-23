@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.los_maestros.pedidos.dto.PedidoRequest;
 import com.los_maestros.pedidos.model.Pedido;
 import com.los_maestros.pedidos.model.DetallePedido;
-import com.los_maestros.pedidos.repository.DetallePedidoRepository;
 import com.los_maestros.pedidos.service.PedidoService;
 
 import jakarta.validation.Valid;
@@ -26,14 +25,8 @@ import jakarta.validation.Valid;
 public class PedidoController {
 
     private final PedidoService service;
-    private final DetallePedidoRepository detalleRepository;
 
-    public PedidoController(
-            PedidoService service,
-            DetallePedidoRepository detalleRepository) {
-        this.service = service;
-        this.detalleRepository = detalleRepository;
-    }
+    public PedidoController(PedidoService service) { this.service = service; }
 
     @GetMapping
     public List<Pedido> listar() {
@@ -64,7 +57,7 @@ public class PedidoController {
 
     @GetMapping("/reportes/detalles")
     public List<DetallePedido> listarDetallesReporte() {
-        return detalleRepository.findAll();
+        return service.listarDetalles();
     }
 
     private String correoSesion() {

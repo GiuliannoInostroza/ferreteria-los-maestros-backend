@@ -12,7 +12,6 @@ import com.los_maestros.cuentas.model.CuentaCorriente;
 import com.los_maestros.cuentas.model.Movimiento;
 import com.los_maestros.cuentas.repository.CuentaCorrienteRepository;
 import com.los_maestros.cuentas.repository.MovimientoRepository;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CuentaService {
@@ -75,7 +74,6 @@ public class CuentaService {
         return movimientos.findByCuentaId(cuentaId);
     }
 
-    @Transactional
     public Movimiento registrarCargo(Long cuentaId, MovimientoRequest datos) {
         CuentaCorriente cuenta = buscar(cuentaId);
         if (datos.pedidoId() != null &&
@@ -93,7 +91,6 @@ public class CuentaService {
         return guardarMovimiento(cuentaId, "Cargo", datos);
     }
 
-    @Transactional
     public Movimiento registrarAbono(Long cuentaId, MovimientoRequest datos) {
         CuentaCorriente cuenta = buscar(cuentaId);
         if (datos.monto() > cuenta.getSaldo()) {

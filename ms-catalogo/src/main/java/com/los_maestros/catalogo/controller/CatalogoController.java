@@ -8,7 +8,7 @@ import com.los_maestros.catalogo.dto.CatalogoResponse;
 import com.los_maestros.catalogo.service.CatalogoService;
 
 @RestController
-@RequestMapping("/api/v1/catalogo")
+@RequestMapping("/api/catalogo")
 public class CatalogoController {
     private final CatalogoService service;
 

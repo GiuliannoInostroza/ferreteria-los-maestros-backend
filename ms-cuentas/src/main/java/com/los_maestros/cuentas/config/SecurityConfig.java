@@ -30,8 +30,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/swagger-ui/**", "/swagger-ui.html",
                     "/v3/api-docs/**", "/error").permitAll()
-                .requestMatchers("/api/v1/cuentas/mia/**").authenticated()
-                .requestMatchers("/api/v1/cuentas/**").hasRole("Administrador")
+                .requestMatchers("/api/cuentas/mia/**").authenticated()
+                .requestMatchers("/api/cuentas/**").hasRole("Administrador")
                 .anyRequest().denyAll())
             .exceptionHandling(e -> e.authenticationEntryPoint(
                 new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))

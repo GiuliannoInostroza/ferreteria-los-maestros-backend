@@ -43,11 +43,9 @@ public class SecurityConfig {
         "/v3/api-docs/**",
         "/error"
     ).permitAll()
-        // Blogs: lectura pública
         .requestMatchers(HttpMethod.GET, "/api/blogs", "/api/blogs/**")
             .permitAll()
 
-        // Blogs: escritura solo Administrador
         .requestMatchers(HttpMethod.POST, "/api/blogs")
             .hasRole("Administrador")
         .requestMatchers(HttpMethod.PUT, "/api/blogs/**")
@@ -55,15 +53,12 @@ public class SecurityConfig {
         .requestMatchers(HttpMethod.DELETE, "/api/blogs/**")
             .hasRole("Administrador")
 
-        // Contacto: cualquier visitante puede enviar
         .requestMatchers(HttpMethod.POST, "/api/contactos")
             .permitAll()
 
-        // Contacto: solo Administrador puede consultar
         .requestMatchers(HttpMethod.GET, "/api/contactos", "/api/contactos/**")
             .hasRole("Administrador")
 
-        // Contacto: solo Administrador puede eliminar
         .requestMatchers(HttpMethod.DELETE, "/api/contactos/**")
             .hasRole("Administrador")
 

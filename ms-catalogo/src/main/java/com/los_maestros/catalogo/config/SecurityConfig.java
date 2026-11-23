@@ -30,19 +30,19 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/swagger-ui/**", "/swagger-ui.html",
                     "/v3/api-docs/**", "/error").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/v1/productos/alertas")
+                .requestMatchers(HttpMethod.GET, "/api/productos/alertas")
                     .hasAnyRole("Administrador", "Vendedor")
-                .requestMatchers(HttpMethod.POST, "/api/v1/productos/descontar-stock")
+                .requestMatchers(HttpMethod.POST, "/api/productos/descontar-stock")
                     .authenticated()
-                .requestMatchers(HttpMethod.GET, "/api/v1/catalogo/**",
-                    "/api/v1/productos/**", "/api/v1/categorias/**",
-                    "/api/v1/ofertas/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/v1/productos")
+                .requestMatchers(HttpMethod.GET, "/api/catalogo/**",
+                    "/api/productos/**", "/api/categorias/**",
+                    "/api/ofertas/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/productos")
                     .hasAnyRole("Administrador", "Vendedor")
-                .requestMatchers(HttpMethod.PUT, "/api/v1/productos/**")
+                .requestMatchers(HttpMethod.PUT, "/api/productos/**")
                     .hasAnyRole("Administrador", "Vendedor")
-                .requestMatchers("/api/v1/productos/**", "/api/v1/categorias/**",
-                    "/api/v1/ofertas/**").hasRole("Administrador")
+                .requestMatchers("/api/productos/**", "/api/categorias/**",
+                    "/api/ofertas/**").hasRole("Administrador")
                 .anyRequest().denyAll())
             .exceptionHandling(e -> e.authenticationEntryPoint(
                 new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
