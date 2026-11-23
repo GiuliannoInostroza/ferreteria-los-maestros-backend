@@ -16,12 +16,42 @@
             "mainClass": "com.los_maestros.pedidos.PedidosApplication",
             "projectName": "pedidos",
             "envFile": "${workspaceFolder}/ms-pedidos/.env"
+        },
+        {
+            "type": "java",
+            "name": "ms-catalogo",
+            "request": "launch",
+            "mainClass": "com.los_maestros.catalogo.CatalogoApplication",
+            "projectName": "catalogo",
+            "envFile": "${workspaceFolder}/ms-catalogo/.env"
+        },
+        {
+            "type": "java",
+            "name": "ms-cuentas",
+            "request": "launch",
+            "mainClass": "com.los_maestros.cuentas.CuentasApplication",
+            "projectName": "cuentas",
+            "envFile": "${workspaceFolder}/ms-cuentas/.env"
+        },
+        {
+            "type": "java",
+            "name": "ms-contenido",
+            "request": "launch",
+            "mainClass": "com.los_maestros.contenido.ContenidoApplication",
+            "projectName": "contenido",
+            "envFile": "${workspaceFolder}/ms-contenido/.env"
         }
     ],
     "compounds": [
         {
             "name": "Todos los microservicios",
-            "configurations": ["ms-usuarios", "ms-pedidos"]
+            "configurations": [
+                "ms-usuarios",
+                "ms-pedidos",
+                "ms-catalogo",
+                "ms-cuentas",
+                "ms-contenido"
+            ]
         }
     ]
 }

@@ -7,10 +7,10 @@ El frontend está en https://github.com/GiuliannoInostroza/front-ferreteria-los-
 | Microservicio | Carpeta | Puerto | Base de datos | Responsable | Estado |
 |---|---|---|---|---|---|
 | Usuarios y autenticación | `ms-usuarios` | 8090 | `db_usuarios` | Giulianno Inostroza | Listo |
-| Catálogo | `ms-catalogo` | 8091 | `db_catalogo` | Nicolás Pérez | Pendiente |
+| Catálogo | `ms-catalogo` | 8091 | `db_catalogo` | Nicolás Pérez | Listo |
 | Pedidos | `ms-pedidos` | 8092 | `db_pedidos` | Giulianno Inostroza | Listo |
-| Cuentas corrientes | `ms-cuentas` | 8093 | `db_cuentas` | Nicolás Pérez | Pendiente |
-| Contenido | `ms-contenido` | 8094 | `db_contenido` | Agustín Pérez | Pendiente |
+| Cuentas corrientes | `ms-cuentas` | 8093 | `db_cuentas` | Nicolás Pérez | Listo |
+| Contenido | `ms-contenido` | 8094 | `db_contenido` | Agustín Pérez | Listo |
 
 ## Cómo se reparte la seguridad (Guía 17)
 

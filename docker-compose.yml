@@ -55,6 +55,90 @@ services:
       db-pedidos:
         condition: service_healthy
 
+  db-catalogo:
+    image: mariadb:11.4
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_DATABASE: db_catalogo
+      MARIADB_USER: catalogo_app
+      MARIADB_PASSWORD: ${CATALOGO_DB_PASSWORD}
+    volumes:
+      - datos-catalogo:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      retries: 20
+
+  db-cuentas:
+    image: mariadb:11.4
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_DATABASE: db_cuentas
+      MARIADB_USER: cuentas_app
+      MARIADB_PASSWORD: ${CUENTAS_DB_PASSWORD}
+    volumes:
+      - datos-cuentas:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      retries: 20
+
+  db-contenido:
+    image: mariadb:11.4
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_DATABASE: db_contenido
+      MARIADB_USER: contenido_app
+      MARIADB_PASSWORD: ${CONTENIDO_DB_PASSWORD}
+    volumes:
+      - datos-contenido:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      retries: 20
+
+  ms-catalogo:
+    build: ./ms-catalogo
+    ports:
+      - "8091:8091"
+    environment:
+      DB_URL: jdbc:mysql://db-catalogo:3306/db_catalogo?useSSL=false&allowPublicKeyRetrieval=true
+      DB_USER: catalogo_app
+      DB_PASSWORD: ${CATALOGO_DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+    depends_on:
+      db-catalogo:
+        condition: service_healthy
+
+  ms-cuentas:
+    build: ./ms-cuentas
+    ports:
+      - "8093:8093"
+    environment:
+      DB_URL: jdbc:mysql://db-cuentas:3306/db_cuentas?useSSL=false&allowPublicKeyRetrieval=true
+      DB_USER: cuentas_app
+      DB_PASSWORD: ${CUENTAS_DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+    depends_on:
+      db-cuentas:
+        condition: service_healthy
+
+  ms-contenido:
+    build: ./ms-contenido
+    ports:
+      - "8094:8094"
+    environment:
+      DB_URL: jdbc:mysql://db-contenido:3306/db_contenido?useSSL=false&allowPublicKeyRetrieval=true
+      DB_USER: contenido_app
+      DB_PASSWORD: ${CONTENIDO_DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+    depends_on:
+      db-contenido:
+        condition: service_healthy
+
 volumes:
   datos-usuarios:
   datos-pedidos:
+  datos-catalogo:
+  datos-cuentas:
+  datos-contenido:
