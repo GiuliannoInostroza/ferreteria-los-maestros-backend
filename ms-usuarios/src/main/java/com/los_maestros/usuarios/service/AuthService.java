@@ -36,6 +36,16 @@ public class AuthService {
             usuario.getCorreo(), usuario.getRol(), usuario.getNombre());
     }
 
+    public LoginResponse renovar(String correo) {
+        Usuario usuario = usuarios.findByCorreoIgnoreCase(correo)
+            .orElseThrow(() -> new BadCredentialsException("Sesión inválida"));
+        if (!usuario.getActivo()) {
+            throw new BadCredentialsException("Sesión inválida");
+        }
+        return new LoginResponse(jwt.generar(usuario),
+            usuario.getCorreo(), usuario.getRol(), usuario.getNombre());
+    }
+
     public UsuarioResponse registrar(RegistroRequest request) {
         if (usuarios.findByCorreoIgnoreCase(request.correo()).isPresent()) {
             throw new CorreoDuplicadoException("Ya existe una cuenta con ese correo");

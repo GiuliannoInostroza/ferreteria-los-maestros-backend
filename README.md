@@ -16,7 +16,7 @@ El frontend está en https://github.com/GiuliannoInostroza/front-ferreteria-los-
 
 - `ms-usuarios` es el servicio de autenticación: guarda los usuarios con su contraseña en BCrypt, recibe el login y **emite** el JWT (emisor `ms-usuarios`, correo como `subject` y el claim `rol`). También protege su propia administración de usuarios.
 - Los demás microservicios son servicios de recursos: **validan** el JWT con la misma `JWT_SECRET` y exigen el emisor `ms-usuarios`, sin consultar la base de usuarios.
-- El token dura 1 hora (`app.jwt.expiration-ms=3600000`) y no se renueva: al vencer, las API responden 401 y React vuelve a pedir el inicio de sesión.
+- El token dura 1 hora (`app.jwt.expiration-ms=3600000`). Se renueva con `POST /api/auth/renovar`, que exige un token todavía vigente, vuelve a leer al usuario en la base (si fue desactivado responde 401; si le cambiaron el rol, el token nuevo trae el rol actual) y entrega un token nuevo de 1 hora. React lo pide cinco minutos antes del vencimiento. Un token vencido o alterado no se puede renovar: las API responden 401 y React vuelve a pedir el inicio de sesión.
 - Roles: `Administrador`, `Vendedor` y `Cliente`.
 
 ## Variables de entorno
@@ -94,6 +94,7 @@ Para detenerlos: `docker compose --env-file .env.docker down`. Los datos quedan 
 |---|---|---|---|
 | Iniciar sesión | POST /api/auth/login | Público | 200 con token, 401 si las credenciales no sirven o la cuenta está inactiva |
 | Crear cuenta | POST /api/auth/registro | Público | 201 como Cliente, 409 si el correo ya existe |
+| Renovar token | POST /api/auth/renovar | Con sesión | 200 con un token nuevo de 1 hora, 401 si el token venció, fue alterado o la cuenta está inactiva |
 | Listar usuarios | GET /api/usuarios | Administrador | 200 |
 | Buscar usuario | GET /api/usuarios/{id} | Administrador | 200 o 404 |
 | Crear usuario | POST /api/usuarios | Administrador | 201, 400 o 409 |
@@ -127,3 +128,5 @@ Estados: Pendiente, Confirmado, En preparación, Listo para retiro, En despacho,
 | GET /api/pedidos con token Cliente | ms-pedidos 8092 | 403 |
 | GET /api/pedidos con token Vendedor | ms-pedidos 8092 | 200 |
 | Token alterado | ms-pedidos 8092 | 401 |
+| POST /api/auth/renovar con token vigente | ms-usuarios 8090 | 200 y JWT nuevo |
+| POST /api/auth/renovar sin token | ms-usuarios 8090 | 401 |
