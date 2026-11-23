@@ -44,7 +44,7 @@ public class SecurityConfig {
         "/error"
     ).permitAll()
         .requestMatchers(HttpMethod.GET, "/api/blogs", "/api/blogs/**")
-            .permitAll()
+            .authenticated()
 
         .requestMatchers(HttpMethod.POST, "/api/blogs")
             .hasRole("Administrador")
@@ -54,7 +54,7 @@ public class SecurityConfig {
             .hasRole("Administrador")
 
         .requestMatchers(HttpMethod.POST, "/api/contactos")
-            .permitAll()
+            .authenticated()
 
         .requestMatchers(HttpMethod.GET, "/api/contactos", "/api/contactos/**")
             .hasRole("Administrador")
