@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,6 +34,8 @@ public class Pedido {
     private String medioPago;
 
     @NotBlank(message = "El estado es obligatorio")
+    @Pattern(regexp = "Pendiente|Confirmado|En preparación|Listo para retiro|En despacho|Entregado|Cancelado",
+        message = "Estado de pedido inválido")
     private String estado;
 
     private Integer total;

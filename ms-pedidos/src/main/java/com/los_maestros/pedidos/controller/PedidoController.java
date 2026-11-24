@@ -57,6 +57,11 @@ public class PedidoController {
         return service.actualizar(id, pedido);
     }
 
+    @GetMapping("/{id}/detalles")
+    public List<DetallePedido> listarDetallesPorPedido(@PathVariable Long id) {
+        return service.listarDetallesPorPedido(id);
+    }
+
     @GetMapping("/reportes/detalles")
     public List<DetallePedido> listarDetallesReporte() {
         return service.listarDetalles();

@@ -69,6 +69,11 @@ public class PedidoService {
         return guardado;
     }
 
+    public List<DetallePedido> listarDetallesPorPedido(Long id) {
+        buscar(id);
+        return detalles.findByPedidoId(id);
+    }
+
     public List<DetallePedido> listarDetalles() {
         return detalles.findAll();
     }
