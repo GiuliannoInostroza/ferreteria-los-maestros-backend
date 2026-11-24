@@ -2,8 +2,11 @@ package com.los_maestros.pedidos.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
+
+import com.los_maestros.pedidos.service.CatalogoCliente.ProductoVigente;
 
 import com.los_maestros.pedidos.dto.PedidoRequest;
 import com.los_maestros.pedidos.exception.RecursoNoEncontradoException;
@@ -16,10 +19,13 @@ import com.los_maestros.pedidos.repository.PedidoRepository;
 public class PedidoService {
     private final PedidoRepository repository;
     private final DetallePedidoRepository detalles;
+    private final CatalogoCliente catalogo;
 
-    public PedidoService(PedidoRepository repository, DetallePedidoRepository detalles) {
+    public PedidoService(PedidoRepository repository, DetallePedidoRepository detalles,
+            CatalogoCliente catalogo) {
         this.repository = repository;
         this.detalles = detalles;
+        this.catalogo = catalogo;
     }
 
     public List<Pedido> listar() { return repository.findAll(); }
@@ -33,10 +39,18 @@ public class PedidoService {
             new RecursoNoEncontradoException("Pedido no encontrado: " + id));
     }
 
-    public Pedido crear(PedidoRequest datos, String correo) {
+    public Pedido crear(PedidoRequest datos, String correo, String authorization) {
+        Map<String, ProductoVigente> vigentes = catalogo.productosVigentes(authorization);
         int total = 0;
         for (DetallePedido detalle : datos.detalles()) {
-            total += detalle.getCantidad() * detalle.getPrecioUnitario();
+            ProductoVigente producto = vigentes.get(detalle.getCodigoProducto());
+            if (producto == null) {
+                throw new RecursoNoEncontradoException(
+                    "Producto no encontrado en el catálogo: " + detalle.getCodigoProducto());
+            }
+            detalle.setNombreProducto(producto.nombre());
+            detalle.setPrecioUnitario(producto.precio());
+            total += detalle.getCantidad() * producto.precio();
         }
         Pedido pedido = new Pedido();
         pedido.setCorreoCliente(correo);

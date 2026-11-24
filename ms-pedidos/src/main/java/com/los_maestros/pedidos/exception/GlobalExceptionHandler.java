@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -14,6 +15,12 @@ public class GlobalExceptionHandler {
     ResponseEntity<Map<String, String>> noEncontrado(RecursoNoEncontradoException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
             .body(Map.of("error", e.getMessage()));
+    }
+
+    @ExceptionHandler(RestClientException.class)
+    ResponseEntity<Map<String, String>> catalogoNoDisponible(RestClientException e) {
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+            .body(Map.of("error", "No se pudo consultar el catálogo para calcular los precios"));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

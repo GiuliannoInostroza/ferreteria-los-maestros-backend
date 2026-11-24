@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,9 +45,10 @@ public class PedidoController {
     }
 
     @PostMapping
-    public ResponseEntity<Pedido> crear(@Valid @RequestBody PedidoRequest datos) {
+    public ResponseEntity<Pedido> crear(@Valid @RequestBody PedidoRequest datos,
+            @RequestHeader("Authorization") String authorization) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(service.crear(datos, correoSesion()));
+                .body(service.crear(datos, correoSesion(), authorization));
     }
 
     @PutMapping("/{id}")
