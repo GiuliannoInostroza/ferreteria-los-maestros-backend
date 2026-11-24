@@ -48,6 +48,7 @@ public class PedidoService {
                 throw new RecursoNoEncontradoException(
                     "Producto no encontrado en el catálogo: " + detalle.getCodigoProducto());
             }
+            detalle.setId(null);
             detalle.setNombreProducto(producto.nombre());
             detalle.setPrecioUnitario(producto.precio());
             total += detalle.getCantidad() * producto.precio();

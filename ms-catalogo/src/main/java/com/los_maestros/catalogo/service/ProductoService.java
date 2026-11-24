@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.los_maestros.catalogo.dto.DescuentoStockRequest;
 import com.los_maestros.catalogo.dto.ItemStock;
@@ -88,16 +89,14 @@ public class ProductoService {
         repository.delete(actual);
     }
 
+    @Transactional
     public List<Producto> descontarStock(DescuentoStockRequest datos) {
+        List<Producto> actualizados = new ArrayList<>();
         for (ItemStock item : datos.items()) {
             Producto producto = buscar(item.productoId());
             if (producto.getStock() < item.cantidad()) {
                 throw new ReglaNegocioException("Stock insuficiente de " + producto.getNombre());
             }
-        }
-        List<Producto> actualizados = new ArrayList<>();
-        for (ItemStock item : datos.items()) {
-            Producto producto = buscar(item.productoId());
             producto.setStock(producto.getStock() - item.cantidad());
             actualizados.add(repository.save(producto));
         }

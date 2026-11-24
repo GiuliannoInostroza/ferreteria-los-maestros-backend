@@ -1,6 +1,7 @@
 package com.los_maestros.pedidos.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
@@ -50,6 +51,7 @@ class PedidoServiceTest {
             return p;
         });
         DetallePedido d = detalle("MC001", 2, 1);
+        d.setId(99L);
 
         Pedido pedido = service.crear(new PedidoRequest("Retiro en tienda", null, "Pago en tienda",
             List.of(d)), "cliente@gmail.com", "Bearer token");
@@ -58,6 +60,7 @@ class PedidoServiceTest {
         assertEquals(5391, d.getPrecioUnitario().intValue());
         assertEquals("Cemento Polpaico gris 25 kg", d.getNombreProducto());
         assertEquals("Pendiente", pedido.getEstado());
+        assertNull(d.getId());
     }
 
     @Test
